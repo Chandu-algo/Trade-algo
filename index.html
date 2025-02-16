@@ -9,6 +9,15 @@
 <body>
     <div id="alerts"></div>
     <h1>Trading Algorithm</h1>
+    <div>
+        <label for="alpha-key">Alpha Vantage API Key:</label>
+        <input type="text" id="alpha-key" placeholder="Enter Alpha Vantage API Key">
+        <label for="finnhub-key">Finnhub API Key:</label>
+        <input type="text" id="finnhub-key" placeholder="Enter Finnhub API Key">
+        <button onclick="getStockData()">Submit</button>
+    </div>
+    
+    <h3 id="last-updated">Last Updated: </h3>
     <div id="output"></div>
 
     <script src="script.js"></script>
