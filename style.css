@@ -31,6 +31,8 @@ button:hover {
     color: red;
     font-size: 18px;
     font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
 }
 
 #output {
@@ -52,4 +54,8 @@ table, th, td {
 th, td {
     padding: 10px;
     text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
 }
