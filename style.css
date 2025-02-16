@@ -1,46 +1,92 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock Tracker</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <h1>Stock Tracker</h1>
-    
-    <div id="last-updated">
-        <strong>Last Updated: </strong><span id="timestamp">Loading...</span>
-    </div>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
 
-    <div>
-        <label for="alpha-key">Alpha Vantage API Key:</label>
-        <input type="text" id="alpha-key" placeholder="Enter Alpha Vantage API Key">
-        <br>
-        <label for="finnhub-key">Finnhub API Key:</label>
-        <input type="text" id="finnhub-key" placeholder="Enter Finnhub API Key">
-        <br>
-        <button id="submit-btn">Submit</button>
-    </div>
+h1 {
+    text-align: center;
+}
 
-    <div id="alerts"></div>
+#alerts {
+    color: red;
+    font-size: 18px;
+    font-weight: bold;
+}
 
-    <h2>MAG 7 Stocks (S&P 500)</h2>
-    <table id="stocks-table">
-        <thead>
-            <tr>
-                <th>Symbol</th>
-                <th>Open Price</th>
-                <th>Previous Close</th>
-                <th>Current Price</th>
-                <th>Weightage in S&P 500</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Data will be dynamically inserted here -->
-        </tbody>
-    </table>
+#last-updated {
+    font-size: 14px;
+    color: gray;
+    margin-bottom: 20px;
+}
 
-    <script src="script.js"></script>
-</body>
-</html>
+.api-keys {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.api-keys input {
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 14px;
+    width: 80%;
+}
+
+#submit {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#submit:hover {
+    background-color: #45a049;
+}
+
+#refresh {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.tables {
+    margin-top: 40px;
+}
+
+.table-container {
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    background-color: white;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+thead {
+    background-color: #f2f2f2;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#api-error-message {
+    text-align: center;
+    margin-top: 20px;
+}
