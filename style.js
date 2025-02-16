@@ -8,8 +8,7 @@ const stocks = [
     { symbol: 'GOOG', spyWeightage: '6.9%' }
 ];
 
-const apiDataElement = document.getElementById('api-data');
-const defaultDataElement = document.getElementById('default-data');
+const dataTableElement = document.getElementById('data-table');
 const lastUpdatedElement = document.getElementById('last-updated');
 const apiErrorMessage = document.getElementById('api-error-message');
 const submitButton = document.getElementById('submit');
@@ -34,15 +33,14 @@ function fetchDataFromApi() {
         .catch(error => {
             console.error('Error fetching data:', error);
             apiErrorMessage.style.display = 'block';
-            apiDataElement.style.display = 'none';
-            defaultDataElement.style.display = 'block';
+            dataTableElement.style.display = 'none';
+            fetchDefaultData();
         });
 }
 
 // Display data from API
 function displayApiData(data) {
-    apiDataElement.style.display = 'block';
-    defaultDataElement.style.display = 'none';
+    dataTableElement.style.display = 'block';
     apiErrorMessage.style.display = 'none';
     
     let tableRows = '';
@@ -61,13 +59,13 @@ function displayApiData(data) {
             </tr>
         `;
     });
-    apiDataElement.querySelector('tbody').innerHTML = tableRows;
+    dataTableElement.querySelector('tbody').innerHTML = tableRows;
+    updateLastFetchedTime();
 }
 
 // Fetch default data when no API data is available
 function fetchDefaultData() {
-    apiDataElement.style.display = 'none';
-    defaultDataElement.style.display = 'block';
+    dataTableElement.style.display = 'block';
     apiErrorMessage.style.display = 'none';
     
     let tableRows = '';
@@ -85,7 +83,8 @@ function fetchDefaultData() {
             </tr>
         `;
     });
-    defaultDataElement.querySelector('tbody').innerHTML = tableRows;
+    dataTableElement.querySelector('tbody').innerHTML = tableRows;
+    updateLastFetchedTime();
 }
 
 // Event listener for the Submit button
@@ -98,8 +97,6 @@ submitButton.addEventListener('click', function() {
     } else {
         fetchDefaultData();
     }
-
-    updateLastFetchedTime();
 });
 
 // Initial call to load default data
