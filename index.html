@@ -7,10 +7,8 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="alerts"></div>
     <h1>Trading Algorithm</h1>
-    
-    <!-- API Key Input Fields -->
+
     <label for="alphaKey">Alpha Vantage API Key:</label>
     <input type="text" id="alphaKey" placeholder="Enter Alpha Vantage API Key">
     <br>
@@ -18,6 +16,8 @@
     <input type="text" id="finnhubKey" placeholder="Enter Finnhub API Key">
     <br>
     <button onclick="fetchData()">Submit</button>
+
+    <div id="alerts"></div>
 
     <div id="output"></div>
 
