@@ -9,43 +9,17 @@
 <body>
     <div id="alerts"></div>
     <h1>Trading Algorithm</h1>
-    <div id="last-updated"></div>
+    
+    <!-- API Key Input Fields -->
+    <label for="alphaKey">Alpha Vantage API Key:</label>
+    <input type="text" id="alphaKey" placeholder="Enter Alpha Vantage API Key">
+    <br>
+    <label for="finnhubKey">Finnhub API Key:</label>
+    <input type="text" id="finnhubKey" placeholder="Enter Finnhub API Key">
+    <br>
+    <button onclick="fetchData()">Submit</button>
 
-    <!-- API Key Inputs -->
-    <div>
-        <label for="alpha-key">Alpha Vantage API Key: </label>
-        <input type="text" id="alpha-key" placeholder="Enter Alpha Vantage API Key">
-    </div>
-    <div>
-        <label for="finnhub-key">Finnhub API Key: </label>
-        <input type="text" id="finnhub-key" placeholder="Enter Finnhub API Key">
-    </div>
-    <button id="submit">Submit</button>
-
-    <!-- Error Message -->
-    <div id="api-error-message" style="color: red; display: none;">
-        Data cannot be fetched from the API. Please check the keys or internet connection.
-    </div>
-
-    <!-- Data Table -->
-    <div id="data-table" style="display: none;">
-        <h2>MAG 7 Stocks (S&P 500)</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Symbol</th>
-                    <th>Open Price</th>
-                    <th>Previous Close</th>
-                    <th>Current Price</th>
-                    <th>SPY Weightage</th>
-                    <th>RSI</th>
-                    <th>EMA 20</th>
-                    <th>EMA 50</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </div>
+    <div id="output"></div>
 
     <script src="script.js"></script>
 </body>
