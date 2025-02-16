@@ -10,20 +10,43 @@ body {
     font-weight: bold;
 }
 
-#output {
+table {
     margin-top: 20px;
-    font-size: 16px;
+    width: 100%;
+    border-collapse: collapse;
 }
 
-input, button {
-    margin-top: 10px;
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
     padding: 8px;
-    font-size: 16px;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+#stocks-table td {
+    color: purple;
+}
+
+#stocks-table td.error {
+    color: red;
+}
+
+input {
+    padding: 5px;
+    margin: 10px 0;
 }
 
 button {
+    padding: 5px 15px;
     background-color: #4CAF50;
     color: white;
+    border: none;
     cursor: pointer;
 }
 
