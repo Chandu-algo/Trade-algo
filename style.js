@@ -1,165 +1,85 @@
-const stockSymbols = ['AAPL', 'MSFT', 'GOOG', 'AMZN', 'TSLA', 'FB', 'NVDA'];
-const weightage = {
-    'AAPL': '6.5%',
-    'MSFT': '7.0%',
-    'GOOG': '5.2%',
-    'AMZN': '4.5%',
-    'TSLA': '5.8%',
-    'FB': '3.2%',
-    'NVDA': '4.0%'
-};
+const stocks = [
+    { symbol: 'AAPL' },
+    { symbol: 'TSLA' },
+    { symbol: 'GOOGL' }
+];
 
-document.getElementById('submit-btn').addEventListener('click', function() {
-    const alphaKey = document.getElementById('alpha-key').value;
-    const finnhubKey = document.getElementById('finnhub-key').value;
+const apiDataElement = document.getElementById('api-data');
+const emptyDataElement = document.getElementById('empty-data');
+const lastUpdatedElement = document.getElementById('last-updated');
+const apiErrorMessage = document.getElementById('api-error-message');
+const submitButton = document.getElementById('submit');
+const refreshButton = document.getElementById('refresh');
 
-    fetchStockData(alphaKey, finnhubKey);
+let alphaVantageKey = '';
+let finnhubKey = '';
+
+function updateLastFetchedTime() {
+    const currentDate = new Date();
+    lastUpdatedElement.textContent = `Last Updated: ${currentDate.toLocaleString()}`;
+}
+
+function fetchDataFromApi() {
+    const url = `https://api.example.com/data`; // Replace with your actual API URL
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            displayApiData(data);
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+            apiErrorMessage.style.display = 'block';
+            apiDataElement.style.display = 'none';
+            emptyDataElement.style.display = 'block';
+        });
+}
+
+function displayApiData(data) {
+    apiDataElement.style.display = 'block';
+    emptyDataElement.style.display = 'none';
+    apiErrorMessage.style.display = 'none';
+    
+    let tableRows = '';
+    stocks.forEach(stock => {
+        const stockData = data[stock.symbol] || {};
+        tableRows += `
+            <tr>
+                <td>-</td>
+                <td>${stock.symbol}</td>
+                <td>${stockData.open || '-'}</td>
+                <td>${stockData.prevClose || '-'}</td>
+                <td>${stockData.currentPrice || '-'}</td>
+                <td>${stockData.spyWeightage || '-'}</td>
+                <td>${stockData.rsi || '-'}</td>
+                <td>${stockData.ema20 || '-'}</td>
+                <td>${stockData.ema50 || '-'}</td>
+            </tr>
+        `;
+    });
+    apiDataElement.querySelector('tbody').innerHTML = tableRows;
+}
+
+submitButton.addEventListener('click', () => {
+    alphaVantageKey = document.getElementById('alpha-key').value;
+    finnhubKey = document.getElementById('finnhub-key').value;
+
+    if (alphaVantageKey || finnhubKey) {
+        fetchDataFromApi();
+    } else {
+        apiErrorMessage.style.display = 'block';
+        apiDataElement.style.display = 'none';
+        emptyDataElement.style.display = 'block';
+    }
 });
 
-// Fetch stock data
-async function fetchStockData(alphaKey, finnhubKey) {
-    const timestamp = new Date().toLocaleString();
-    document.getElementById('timestamp').innerText = timestamp;
-    
-    let dataFetched = false;
+refreshButton.addEventListener('click', () => {
+    window.location.reload();
+});
 
-    // Clear previous data in table
-    const tableBody = document.querySelector('#stocks-table tbody');
-    tableBody.innerHTML = ''; 
+// Set initial last updated time
+updateLastFetchedTime();
 
-    // Show a message that data is loading
-    showMessage("Loading data...");
-
-    // Try fetching from Alpha Vantage API
-    if (alphaKey) {
-        try {
-            const data = await getAlphaVantageData(alphaKey);
-            displayData(data, 'Alpha Vantage API');
-            dataFetched = true;
-        } catch (error) {
-            showMessage('Alpha Vantage API error: ' + error.message);
-        }
-    }
-
-    // If no data from Alpha Vantage, try Finnhub API
-    if (!dataFetched && finnhubKey) {
-        try {
-            const data = await getFinnhubData(finnhubKey);
-            displayData(data, 'Finnhub API');
-            dataFetched = true;
-        } catch (error) {
-            showMessage('Finnhub API error: ' + error.message);
-        }
-    }
-
-    // If no API keys provided or failed, try open source
-    if (!dataFetched) {
-        try {
-            const data = await getOpenSourceData();
-            displayData(data, 'Open Source (Google/Yahoo)');
-        } catch (error) {
-            showMessage('Open Source error: ' + error.message);
-            displayFallbackData();
-        }
-    }
-}
-
-// Display fetched data
-function displayData(data, source) {
-    document.getElementById('alerts').innerHTML = `Data fetched successfully from ${source}.`;
-
-    const tableBody = document.querySelector('#stocks-table tbody');
-    tableBody.innerHTML = ''; // Clear previous table data
-
-    stockSymbols.forEach(symbol => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${symbol}</td>
-            <td>${data[symbol] ? data[symbol].open : '-'}</td>
-            <td>${data[symbol] ? data[symbol].previousClose : '-'}</td>
-            <td>${data[symbol] ? data[symbol].currentPrice : '-'}</td>
-            <td>${weightage[symbol]}</td>
-        `;
-        tableBody.appendChild(row);
-    });
-}
-
-// Show error message or fallback message
-function showMessage(message) {
-    document.getElementById('alerts').innerHTML = message;
-}
-
-// If no data is fetched, show fallback data
-function displayFallbackData() {
-    const tableBody = document.querySelector('#stocks-table tbody');
-    tableBody.innerHTML = ''; // Clear previous table data
-
-    stockSymbols.forEach(symbol => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${symbol}</td>
-            <td class="error">Unable to Fetch Data</td>
-            <td class="error">Unable to Fetch Data</td>
-            <td class="error">Unable to Fetch Data</td>
-            <td class="error">Unable to Fetch Data</td>
-        `;
-        tableBody.appendChild(row);
-    });
-}
-
-// Alpha Vantage API data fetch function
-async function getAlphaVantageData(alphaKey) {
-    const url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=AAPL&apikey=${alphaKey}`;
-    const response = await fetch(url);
-    const data = await response.json();
-    if (data['Time Series (Daily)']) {
-        return {
-            'AAPL': { open: data['Time Series (Daily)']['2025-02-01']['1. open'], previousClose: '-', currentPrice: '-' },
-            'MSFT': { open: '-', previousClose: '-', currentPrice: '-' },
-            'GOOG': { open: '-', previousClose: '-', currentPrice: '-' },
-            'AMZN': { open: '-', previousClose: '-', currentPrice: '-' },
-            'TSLA': { open: '-', previousClose: '-', currentPrice: '-' },
-            'FB': { open: '-', previousClose: '-', currentPrice: '-' },
-            'NVDA': { open: '-', previousClose: '-', currentPrice: '-' }
-        };
-    } else {
-        throw new Error('Invalid response from Alpha Vantage');
-    }
-}
-
-// Finnhub API data fetch function
-async function getFinnhubData(finnhubKey) {
-    const url = `https://finnhub.io/api/v1/quote?symbol=AAPL&token=${finnhubKey}`;
-    const response = await fetch(url);
-    const data = await response.json();
-    if (data) {
-        return {
-            'AAPL': { open: data.o, previousClose: data.pc, currentPrice: data.c },
-            'MSFT': { open: '-', previousClose: '-', currentPrice: '-' },
-            'GOOG': { open: '-', previousClose: '-', currentPrice: '-' },
-            'AMZN': { open: '-', previousClose: '-', currentPrice: '-' },
-            'TSLA': { open: '-', previousClose: '-', currentPrice: '-' },
-            'FB': { open: '-', previousClose: '-', currentPrice: '-' },
-            'NVDA': { open: '-', previousClose: '-', currentPrice: '-' }
-        };
-    } else {
-        throw new Error('Invalid response from Finnhub');
-    }
-}
-
-// Open Source data fetch function (mock data for now)
-async function getOpenSourceData() {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            resolve({
-                'AAPL': { open: 150.50, previousClose: 152.00, currentPrice: 151.20 },
-                'MSFT': { open: 280.00, previousClose: 285.00, currentPrice: 282.50 },
-                'GOOG': { open: 2700.00, previousClose: 2750.00, currentPrice: 2735.00 },
-                'AMZN': { open: 3400.00, previousClose: 3500.00, currentPrice: 3470.00 },
-                'TSLA': { open: 750.00, previousClose: 760.00, currentPrice: 755.00 },
-                'FB': { open: 345.00, previousClose: 340.00, currentPrice: 342.50 },
-                'NVDA': { open: 600.00, previousClose: 615.00, currentPrice: 610.00 }
-            });
-        }, 1000);
-    });
-}
+// Set interval to refresh data every 5 seconds
+setInterval(() => {
+    updateLastFetchedTime();
+}, 5000);
