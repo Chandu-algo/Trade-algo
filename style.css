@@ -10,42 +10,24 @@ body {
     font-weight: bold;
 }
 
-#last-updated {
+#output {
     margin-top: 20px;
-    font-size: 14px;
+    font-size: 16px;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-th, td {
-    padding: 8px;
-    text-align: left;
-    border: 1px solid #ddd;
-}
-
-th {
-    background-color: #f2f2f2;
+input {
+    padding: 5px;
+    margin-bottom: 10px;
 }
 
 button {
     padding: 10px;
-    margin-top: 10px;
-    cursor: pointer;
-    font-size: 16px;
     background-color: #4CAF50;
     color: white;
     border: none;
+    cursor: pointer;
 }
 
 button:hover {
     background-color: #45a049;
-}
-
-input[type="text"] {
-    padding: 8px;
-    margin-top: 5px;
 }
