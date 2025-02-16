@@ -23,6 +23,13 @@ async function fetchStockData(alphaKey, finnhubKey) {
     
     let dataFetched = false;
 
+    // Clear previous data in table
+    const tableBody = document.querySelector('#stocks-table tbody');
+    tableBody.innerHTML = ''; 
+
+    // Show a message that data is loading
+    showMessage("Loading data...");
+
     // Try fetching from Alpha Vantage API
     if (alphaKey) {
         try {
@@ -30,7 +37,7 @@ async function fetchStockData(alphaKey, finnhubKey) {
             displayData(data, 'Alpha Vantage API');
             dataFetched = true;
         } catch (error) {
-            showError('Alpha Vantage API', error);
+            showMessage('Alpha Vantage API error: ' + error.message);
         }
     }
 
@@ -41,7 +48,7 @@ async function fetchStockData(alphaKey, finnhubKey) {
             displayData(data, 'Finnhub API');
             dataFetched = true;
         } catch (error) {
-            showError('Finnhub API', error);
+            showMessage('Finnhub API error: ' + error.message);
         }
     }
 
@@ -51,7 +58,8 @@ async function fetchStockData(alphaKey, finnhubKey) {
             const data = await getOpenSourceData();
             displayData(data, 'Open Source (Google/Yahoo)');
         } catch (error) {
-            showError('Open Source', error);
+            showMessage('Open Source error: ' + error.message);
+            displayFallbackData();
         }
     }
 }
@@ -76,9 +84,13 @@ function displayData(data, source) {
     });
 }
 
-// Show error message
-function showError(source, error) {
-    document.getElementById('alerts').innerHTML = `Error fetching data from ${source}: ${error.message}`;
+// Show error message or fallback message
+function showMessage(message) {
+    document.getElementById('alerts').innerHTML = message;
+}
+
+// If no data is fetched, show fallback data
+function displayFallbackData() {
     const tableBody = document.querySelector('#stocks-table tbody');
     tableBody.innerHTML = ''; // Clear previous table data
 
@@ -145,4 +157,9 @@ async function getOpenSourceData() {
                 'GOOG': { open: 2700.00, previousClose: 2750.00, currentPrice: 2735.00 },
                 'AMZN': { open: 3400.00, previousClose: 3500.00, currentPrice: 3470.00 },
                 'TSLA': { open: 750.00, previousClose: 760.00, currentPrice: 755.00 },
-               
+                'FB': { open: 345.00, previousClose: 340.00, currentPrice: 342.50 },
+                'NVDA': { open: 600.00, previousClose: 615.00, currentPrice: 610.00 }
+            });
+        }, 1000);
+    });
+}
