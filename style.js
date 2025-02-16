@@ -1,11 +1,15 @@
 const stocks = [
     { symbol: 'AAPL' },
     { symbol: 'TSLA' },
-    { symbol: 'GOOGL' }
+    { symbol: 'GOOGL' },
+    { symbol: 'MSFT' },
+    { symbol: 'AMZN' },
+    { symbol: 'NVDA' },
+    { symbol: 'GOOG' }
 ];
 
 const apiDataElement = document.getElementById('api-data');
-const emptyDataElement = document.getElementById('empty-data');
+const defaultDataElement = document.getElementById('default-data');
 const lastUpdatedElement = document.getElementById('last-updated');
 const apiErrorMessage = document.getElementById('api-error-message');
 const submitButton = document.getElementById('submit');
@@ -14,11 +18,13 @@ const refreshButton = document.getElementById('refresh');
 let alphaVantageKey = '';
 let finnhubKey = '';
 
+// Update the last fetched time
 function updateLastFetchedTime() {
     const currentDate = new Date();
     lastUpdatedElement.textContent = `Last Updated: ${currentDate.toLocaleString()}`;
 }
 
+// Fetch data from API
 function fetchDataFromApi() {
     const url = `https://api.example.com/data`; // Replace with your actual API URL
     fetch(url)
@@ -30,13 +36,14 @@ function fetchDataFromApi() {
             console.error('Error fetching data:', error);
             apiErrorMessage.style.display = 'block';
             apiDataElement.style.display = 'none';
-            emptyDataElement.style.display = 'block';
+            defaultDataElement.style.display = 'block';
         });
 }
 
+// Display data from API
 function displayApiData(data) {
     apiDataElement.style.display = 'block';
-    emptyDataElement.style.display = 'none';
+    defaultDataElement.style.display = 'none';
     apiErrorMessage.style.display = 'none';
     
     let tableRows = '';
@@ -44,7 +51,6 @@ function displayApiData(data) {
         const stockData = data[stock.symbol] || {};
         tableRows += `
             <tr>
-                <td>-</td>
                 <td>${stock.symbol}</td>
                 <td>${stockData.open || '-'}</td>
                 <td>${stockData.prevClose || '-'}</td>
@@ -59,27 +65,31 @@ function displayApiData(data) {
     apiDataElement.querySelector('tbody').innerHTML = tableRows;
 }
 
-submitButton.addEventListener('click', () => {
+// Fetch default data when no API data is available
+function fetchDefaultData() {
+    apiDataElement.style.display = 'none';
+    defaultDataElement.style.display = 'block';
+    apiErrorMessage.style.display = 'none';
+}
+
+// Event listener for the Submit button
+submitButton.addEventListener('click', function() {
     alphaVantageKey = document.getElementById('alpha-key').value;
     finnhubKey = document.getElementById('finnhub-key').value;
 
     if (alphaVantageKey || finnhubKey) {
         fetchDataFromApi();
     } else {
-        apiErrorMessage.style.display = 'block';
-        apiDataElement.style.display = 'none';
-        emptyDataElement.style.display = 'block';
+        fetchDefaultData();
     }
+
+    updateLastFetchedTime();
 });
 
-refreshButton.addEventListener('click', () => {
+// Event listener for the Refresh button
+refreshButton.addEventListener('click', function() {
     window.location.reload();
 });
 
-// Set initial last updated time
-updateLastFetchedTime();
-
-// Set interval to refresh data every 5 seconds
-setInterval(() => {
-    updateLastFetchedTime();
-}, 5000);
+// Initial call to load default data
+fetchDefaultData();
