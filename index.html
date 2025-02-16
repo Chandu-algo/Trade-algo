@@ -23,84 +23,117 @@
 
     <button id="refresh" title="Refresh Page">🔄</button>
 
-    <div class="tables">
-        <div class="table-container" id="api-data">
-            <h3>MAG 7 Stocks (S&P 500) - API Data</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Company Logo</th>
-                        <th>Symbol</th>
-                        <th>Open Price</th>
-                        <th>Previous Close</th>
-                        <th>Current Price</th>
-                        <th>SPY Weightage</th>
-                        <th>RSI</th>
-                        <th>EMA 20</th>
-                        <th>EMA 50</th>
-                    </tr>
-                </thead>
-                <tbody id="api-table">
-                    <!-- Table data will be populated here -->
-                </tbody>
-            </table>
-            <div id="api-error-message" style="display:none; color: red;">Unable to fetch data from API sources.</div>
-        </div>
+    <div class="table-container" id="api-data">
+        <h3>MAG 7 Stocks (S&P 500) - API Data</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Symbol</th>
+                    <th>Open Price</th>
+                    <th>Previous Close</th>
+                    <th>Current Price</th>
+                    <th>SPY Weightage</th>
+                    <th>RSI</th>
+                    <th>EMA 20</th>
+                    <th>EMA 50</th>
+                </tr>
+            </thead>
+            <tbody id="api-table">
+                <!-- API data will be populated here -->
+            </tbody>
+        </table>
+        <div id="api-error-message" style="display:none; color: red;">Unable to fetch data from API sources.</div>
+    </div>
 
-        <div class="table-container" id="empty-data">
-            <h3>MAG 7 Stocks (S&P 500) - Default Data</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Company Logo</th>
-                        <th>Symbol</th>
-                        <th>Open Price</th>
-                        <th>Previous Close</th>
-                        <th>Current Price</th>
-                        <th>SPY Weightage</th>
-                        <th>RSI</th>
-                        <th>EMA 20</th>
-                        <th>EMA 50</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Default table with empty data -->
-                    <tr>
-                        <td>-</td>
-                        <td>AAPL</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>-</td>
-                        <td>TSLA</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>-</td>
-                        <td>GOOGL</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+    <div class="table-container" id="default-data">
+        <h3>MAG 7 Stocks (S&P 500) - Default Data</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Symbol</th>
+                    <th>Open Price</th>
+                    <th>Previous Close</th>
+                    <th>Current Price</th>
+                    <th>SPY Weightage</th>
+                    <th>RSI</th>
+                    <th>EMA 20</th>
+                    <th>EMA 50</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Default data with empty values -->
+                <tr>
+                    <td>AAPL</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>TSLA</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>GOOGL</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>MSFT</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>AMZN</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>NVDA</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>GOOG</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
     <script src="script.js"></script>
