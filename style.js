@@ -8,7 +8,7 @@ const stocks = [
     { symbol: "META", spyWeightage: 3.3 },
 ];
 
-// Function to fetch data from Alpha Vantage API
+// Fetch stock data from Alpha Vantage
 async function fetchFromAlphaVantage(symbol) {
     const alphaKey = document.getElementById('alphaKey').value;
     if (!alphaKey) {
@@ -32,7 +32,7 @@ async function fetchFromAlphaVantage(symbol) {
     }
 }
 
-// Function to fetch data from Finnhub API
+// Fetch stock data from Finnhub
 async function fetchFromFinnhub(symbol) {
     const finnhubKey = document.getElementById('finnhubKey').value;
     if (!finnhubKey) {
@@ -57,7 +57,7 @@ async function fetchFromFinnhub(symbol) {
     }
 }
 
-// Function to display data in the table
+// Display stock data in the table
 function displayTable(stockData) {
     let tableHTML = '<table><thead><tr><th>Symbol</th><th>Open Price</th><th>Previous Close</th><th>Current Price</th><th>SPY Weightage</th><th>RSI</th><th>EMA 20</th><th>EMA 50</th></tr></thead><tbody>';
     
@@ -80,7 +80,7 @@ function displayTable(stockData) {
     document.getElementById('output').innerHTML = tableHTML;
 }
 
-// Function to fetch data from APIs and display results
+// Function to fetch data and populate the table
 async function fetchData() {
     const stockData = [];
     const alertsDiv = document.getElementById('alerts');
