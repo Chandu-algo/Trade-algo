@@ -3,43 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock Tracker</title>
+    <title>Trading Algorithm</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Stock Tracker</h1>
-    
-    <div id="last-updated">
-        <strong>Last Updated: </strong><span id="timestamp">Loading...</span>
-    </div>
-
-    <div>
-        <label for="alpha-key">Alpha Vantage API Key:</label>
-        <input type="text" id="alpha-key" placeholder="Enter Alpha Vantage API Key">
-        <br>
-        <label for="finnhub-key">Finnhub API Key:</label>
-        <input type="text" id="finnhub-key" placeholder="Enter Finnhub API Key">
-        <br>
-        <button id="submit-btn">Submit</button>
-    </div>
-
     <div id="alerts"></div>
+    <h1>Trading Algorithm</h1>
+    <div id="last-updated"></div>
 
-    <h2>MAG 7 Stocks (S&P 500)</h2>
-    <table id="stocks-table">
-        <thead>
-            <tr>
-                <th>Symbol</th>
-                <th>Open Price</th>
-                <th>Previous Close</th>
-                <th>Current Price</th>
-                <th>Weightage in S&P 500</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Data will be dynamically inserted here -->
-        </tbody>
-    </table>
+    <div class="api-keys">
+        <label for="alpha-key">Alpha Vantage API Key:</label>
+        <input type="text" id="alpha-key" placeholder="Enter Alpha Vantage API Key" />
+
+        <label for="finnhub-key">Finnhub API Key:</label>
+        <input type="text" id="finnhub-key" placeholder="Enter Finnhub API Key" />
+
+        <button id="submit">Submit</button>
+    </div>
+
+    <button id="refresh" title="Refresh Page">🔄</button>
+
+    <div class="tables">
+        <div class="table-container" id="api-data">
+            <h3>MAG 7 Stocks (S&P 500) - API Data</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Company Logo</th>
+                        <th>Symbol</th>
+                        <th>Open Price</th>
+                        <th>Previous Close</th>
+                        <th>Current Price</th>
+                        <th>SPY Weightage</th>
+                        <th>RSI</th>
+                        <th>EMA 20</th>
+                        <th>EMA 50</th>
+                    </tr>
+                </thead>
+                <tbody id="api-table">
+                    <!-- Table data will be populated here -->
+                </tbody>
+            </table>
+            <div id="api-error-message" style="display:none; color: red;">Unable to fetch data from API sources.</div>
+        </div>
+
+        <div class="table-container" id="empty-data">
+            <h3>MAG 7 Stocks (S&P 500) - Default Data</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Company Logo</th>
+                        <th>Symbol</th>
+                        <th>Open Price</th>
+                        <th>Previous Close</th>
+                        <th>Current Price</th>
+                        <th>SPY Weightage</th>
+                        <th>RSI</th>
+                        <th>EMA 20</th>
+                        <th>EMA 50</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Default table with empty data -->
+                    <tr>
+                        <td>-</td>
+                        <td>AAPL</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>-</td>
+                        <td>TSLA</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>-</td>
+                        <td>GOOGL</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
