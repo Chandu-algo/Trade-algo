@@ -11,20 +11,25 @@
     <h1>Trading Algorithm</h1>
     <div id="last-updated"></div>
 
-    <div class="api-keys">
-        <label for="alpha-key">Alpha Vantage API Key:</label>
-        <input type="text" id="alpha-key" placeholder="Enter Alpha Vantage API Key" />
+    <!-- API Key Inputs -->
+    <div>
+        <label for="alpha-key">Alpha Vantage API Key: </label>
+        <input type="text" id="alpha-key" placeholder="Enter Alpha Vantage API Key">
+    </div>
+    <div>
+        <label for="finnhub-key">Finnhub API Key: </label>
+        <input type="text" id="finnhub-key" placeholder="Enter Finnhub API Key">
+    </div>
+    <button id="submit">Submit</button>
 
-        <label for="finnhub-key">Finnhub API Key:</label>
-        <input type="text" id="finnhub-key" placeholder="Enter Finnhub API Key" />
-
-        <button id="submit">Submit</button>
+    <!-- Error Message -->
+    <div id="api-error-message" style="color: red; display: none;">
+        Data cannot be fetched from the API. Please check the keys or internet connection.
     </div>
 
-    <button id="refresh" title="Refresh Page">🔄</button>
-
-    <div class="table-container" id="api-data">
-        <h3>MAG 7 Stocks (S&P 500) - API Data</h3>
+    <!-- API Data Table -->
+    <div id="api-data" style="display: none;">
+        <h2>MAG 7 Stocks (S&P 500) - API Data</h2>
         <table>
             <thead>
                 <tr>
@@ -38,15 +43,13 @@
                     <th>EMA 50</th>
                 </tr>
             </thead>
-            <tbody id="api-table">
-                <!-- API data will be populated here -->
-            </tbody>
+            <tbody></tbody>
         </table>
-        <div id="api-error-message" style="display:none; color: red;">Unable to fetch data from API sources.</div>
     </div>
 
-    <div class="table-container" id="default-data">
-        <h3>MAG 7 Stocks (S&P 500) - Default Data</h3>
+    <!-- Default Data Table -->
+    <div id="default-data" style="display: none;">
+        <h2>MAG 7 Stocks (S&P 500) - Default Data</h2>
         <table>
             <thead>
                 <tr>
@@ -60,79 +63,7 @@
                     <th>EMA 50</th>
                 </tr>
             </thead>
-            <tbody>
-                <!-- Default data with empty values -->
-                <tr>
-                    <td>AAPL</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>TSLA</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>GOOGL</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>MSFT</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>AMZN</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>NVDA</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>GOOG</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
-            </tbody>
+            <tbody></tbody>
         </table>
     </div>
 
