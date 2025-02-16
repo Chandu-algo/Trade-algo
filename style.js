@@ -1,11 +1,11 @@
 const stocks = [
-    { symbol: 'AAPL' },
-    { symbol: 'TSLA' },
-    { symbol: 'GOOGL' },
-    { symbol: 'MSFT' },
-    { symbol: 'AMZN' },
-    { symbol: 'NVDA' },
-    { symbol: 'GOOG' }
+    { symbol: 'AAPL', spyWeightage: '6.5%' },
+    { symbol: 'TSLA', spyWeightage: '5.3%' },
+    { symbol: 'GOOGL', spyWeightage: '7.2%' },
+    { symbol: 'MSFT', spyWeightage: '8.5%' },
+    { symbol: 'AMZN', spyWeightage: '4.1%' },
+    { symbol: 'NVDA', spyWeightage: '3.8%' },
+    { symbol: 'GOOG', spyWeightage: '6.9%' }
 ];
 
 const apiDataElement = document.getElementById('api-data');
@@ -13,7 +13,6 @@ const defaultDataElement = document.getElementById('default-data');
 const lastUpdatedElement = document.getElementById('last-updated');
 const apiErrorMessage = document.getElementById('api-error-message');
 const submitButton = document.getElementById('submit');
-const refreshButton = document.getElementById('refresh');
 
 let alphaVantageKey = '';
 let finnhubKey = '';
@@ -55,7 +54,7 @@ function displayApiData(data) {
                 <td>${stockData.open || '-'}</td>
                 <td>${stockData.prevClose || '-'}</td>
                 <td>${stockData.currentPrice || '-'}</td>
-                <td>${stockData.spyWeightage || '-'}</td>
+                <td>${stock.spyWeightage || '-'}</td>
                 <td>${stockData.rsi || '-'}</td>
                 <td>${stockData.ema20 || '-'}</td>
                 <td>${stockData.ema50 || '-'}</td>
@@ -70,6 +69,23 @@ function fetchDefaultData() {
     apiDataElement.style.display = 'none';
     defaultDataElement.style.display = 'block';
     apiErrorMessage.style.display = 'none';
+    
+    let tableRows = '';
+    stocks.forEach(stock => {
+        tableRows += `
+            <tr>
+                <td>${stock.symbol}</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>${stock.spyWeightage || '-'}</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+        `;
+    });
+    defaultDataElement.querySelector('tbody').innerHTML = tableRows;
 }
 
 // Event listener for the Submit button
@@ -84,11 +100,6 @@ submitButton.addEventListener('click', function() {
     }
 
     updateLastFetchedTime();
-});
-
-// Event listener for the Refresh button
-refreshButton.addEventListener('click', function() {
-    window.location.reload();
 });
 
 // Initial call to load default data
