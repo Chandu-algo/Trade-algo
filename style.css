@@ -56,12 +56,8 @@ h1 {
     cursor: pointer;
 }
 
-.tables {
-    margin-top: 40px;
-}
-
 .table-container {
-    margin-bottom: 20px;
+    margin-top: 40px;
     border: 1px solid #ddd;
     padding: 10px;
     background-color: white;
@@ -89,4 +85,5 @@ tbody tr:nth-child(even) {
 #api-error-message {
     text-align: center;
     margin-top: 20px;
+    color: red;
 }
